@@ -26,12 +26,26 @@ function App() {
         <div className="setters">
           <div className="session">
             <h4 id="session-label"> Seesion Lenght</h4>
-            <Timesetter />
+            <Timesetter
+              time={sessionTime}
+              setTime={setSessionTime}
+              min={min}
+              max={max}
+              interval={interval}
+              type="Session"
+            />
           </div>
           <div className="break">
             <div className="break"></div>
             <h4 id="break-label">Break Lenght</h4>
-            <TimeSetter />
+            <Timesetter
+              time={breakTime}
+              setTime={setBreakTime}
+              min={min}
+              max={max}
+              interval={interval}
+              type="Break"
+            />
           </div>
         </div>
         <Display />
