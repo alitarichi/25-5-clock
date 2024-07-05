@@ -1,9 +1,8 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { DisplayState } from "./helpers";
 import Timesetter from "./Timesetter";
+import Display from "./Display";
 
 const defaultBreakTime = 5 * 60;
 const defaultSessionTime = 25 * 60;
@@ -19,6 +18,14 @@ function App() {
     timeType: "Session",
     timeRunning: false,
   });
+
+  const reset = () => {
+    console.log("reset");
+  };
+
+  const startStop = (currentDisplayState: DisplayState) => {
+    console.log("startStop");
+  };
 
   return (
     <>
@@ -48,7 +55,11 @@ function App() {
             />
           </div>
         </div>
-        <Display />
+        <Display
+          displayState={displayState}
+          reset={reset}
+          startStop={startStop}
+        />
         <audio id="beep" src={AlarmSound}></audio>
       </div>
     </>
