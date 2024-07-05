@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { DisplayState } from "./helpers";
 import Timesetter from "./Timesetter";
 import Display from "./Display";
-import AlarmSound from "./AlarmSound.mp3";
 
 const defaultBreakTime = 5 * 60;
 const defaultSessionTime = 25 * 60;
@@ -20,11 +19,46 @@ function App() {
     timerRunning: false,
   });
 
+  useEffect(() => {
+    let timerID: number;
+    if (!displayState.timerRunning) return;
+
+    if (displayState.timerRunning) {
+      timerID = window.setInterval(decrementDisplay, 1000);
+    }
+
+    return () => {
+      window.clearInterval(timerID);
+    };
+  }),
+    [displayState.timerRunning];
+
+  useEffect(() => {
+    if (displayState.time === 0) {
+      const audio = document.getElementById("beep") as HTMLAudioElement;
+      audio.play().catch((err) => console.log(err));
+      setDisplayState((prev) => ({
+        ...prev,
+        timeType: prev.timeType === "Session" ? "Break" : "Session",
+        time: prev.timeType === "Session" ? breakTime : sessionTime,
+      }));
+    }
+  }, [displayState, breakTime, sessionTime]);
+
   const reset = () => {
-    console.log("reset");
+    setBreakTime(defaultBreakTime);
+    setSessionTime(defaultSessionTime);
+    setDisplayState({
+      time: defaultSessionTime,
+      timeType: "Session",
+      timerRunning: false,
+    });
+    const audio = document.getElementById("beep") as HTMLAudioElement;
+    audio.pause();
+    audio.currentTime = 0;
   };
 
-  const startStop = (displayState: DisplayState) => {
+  const startStop = () => {
     setDisplayState((prev) => ({
       ...prev,
       timerRunning: !prev.timerRunning,
@@ -34,6 +68,13 @@ function App() {
   const changeBreakTime = (time: number) => {
     if (displayState.timerRunning) return;
     setBreakTime(time);
+  };
+
+  const decrementDisplay = () => {
+    setDisplayState((prev) => ({
+      ...prev,
+      time: prev.time - 1,
+    }));
   };
 
   const changeSessionTime = (time: number) => {
