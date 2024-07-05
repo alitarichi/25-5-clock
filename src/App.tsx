@@ -17,29 +17,32 @@ function App() {
   const [displayState, setDisplayState] = useState<DisplayState>({
     time: sessionTime,
     timeType: "Session",
-    timeRunning: false,
+    timerRunning: false,
   });
 
   const reset = () => {
     console.log("reset");
   };
 
-  const startStop = (currentDisplayState: DisplayState) => {
-    console.log("startStop");
+  const startStop = (displayState: DisplayState) => {
+    setDisplayState((prev) => ({
+      ...prev,
+      timerRunning: !prev.timerRunning,
+    }));
   };
 
   const changeBreakTime = (time: number) => {
-    if (displayState.timeRunning) return;
+    if (displayState.timerRunning) return;
     setBreakTime(time);
   };
 
   const changeSessionTime = (time: number) => {
-    if (displayState.timeRunning) return;
+    if (displayState.timerRunning) return;
     setSessionTime(time);
     setDisplayState({
       time: time,
       timeType: "Session",
-      timeRunning: false,
+      timerRunning: false,
     });
   };
 

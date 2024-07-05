@@ -17,12 +17,12 @@ const Display: React.FC<DisplayProps> = ({
       <h4 id="timer-label">{displayState.timeType}</h4>
       <span
         id="time-left"
-        style={{ color: `${displayState.timeRunning ? "red" : "white"}` }}
+        style={{ color: `${displayState.timerRunning ? "red" : "white"}` }}
       >
         {formatTime(displayState.time)}
       </span>
       <button id="start_stop" onClick={() => startStop(displayState)}>
-        {displayState.timeRunning ? <FaPause /> : <FaPlay />}
+        {displayState.timerRunning ? <FaPause /> : <FaPlay />}
       </button>
       <button id="reset" onClick={reset}>
         <FaUndo />
