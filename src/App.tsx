@@ -28,6 +28,21 @@ function App() {
     console.log("startStop");
   };
 
+  const changeBreakTime = (time: number) => {
+    if (displayState.timeRunning) return;
+    setBreakTime(time);
+  };
+
+  const changeSessionTime = (time: number) => {
+    if (displayState.timeRunning) return;
+    setSessionTime(time);
+    setDisplayState({
+      time: time,
+      timeType: "Session",
+      timeRunning: false,
+    });
+  };
+
   return (
     <>
       <div className="clock">
@@ -36,7 +51,7 @@ function App() {
             <h4 id="session-label"> Seesion Lenght</h4>
             <Timesetter
               time={sessionTime}
-              setTime={setSessionTime}
+              setTime={changeSessionTime}
               min={min}
               max={max}
               interval={interval}
@@ -48,7 +63,7 @@ function App() {
             <h4 id="break-label">Break Lenght</h4>
             <Timesetter
               time={breakTime}
-              setTime={setBreakTime}
+              setTime={changeBreakTime}
               min={min}
               max={max}
               interval={interval}
