@@ -3,6 +3,7 @@ import "./App.css";
 import { DisplayState } from "./helpers";
 import Timesetter from "./Timesetter";
 import Display from "./Display";
+import AlarmSound from "./AlarmSound.mp3";
 
 const defaultBreakTime = 5 * 60;
 const defaultSessionTime = 25 * 60;
@@ -60,7 +61,7 @@ function App() {
           reset={reset}
           startStop={startStop}
         />
-        <audio id="beep" src={AlarmSound}></audio>
+        <audio id="beep" src="./AlarmSound"></audio>
       </div>
     </>
   );
